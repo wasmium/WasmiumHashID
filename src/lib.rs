@@ -33,6 +33,7 @@
 //!
 //!
 
+use nanorand::{BufferedRng, ChaCha8, Rng};
 use tai64::Tai64N;
 
 /// ### Structure
@@ -141,5 +142,45 @@ impl WasmiumHashID {
         };
 
         Ok(hash_array.into())
+    }
+
+    /// Generate a blake3 hash from a byte array of 32 random bytes from CSPRNG
+    ///
+    /// //! #### Usage
+    /// ```rust
+    /// use wasmium_hash_id::WasmiumHashID;
+    ///
+    /// // Generate the hash
+    /// let hash_id = WasmiumHashID::rand32().build();
+    /// ```
+    pub fn rand32() -> WasmiumHashID {
+        let mut buffer = [0u8; 32];
+        let mut rng = BufferedRng::new(ChaCha8::new());
+        rng.fill(&mut buffer);
+        let blake3hash = blake3::hash(&buffer);
+        WasmiumHashID {
+            tai_timestamp: Tai64N::now().to_bytes(),
+            blake3hash: *blake3hash.as_bytes(),
+        }
+    }
+
+    /// Generate a blake3 hash from a byte array of 64 random bytes from CSPRNG
+    ///
+    /// //! #### Usage
+    /// ```rust
+    /// use wasmium_hash_id::WasmiumHashID;
+    ///
+    /// // Generate the hash
+    /// let hash_id = WasmiumHashID::rand64().build();
+    /// ```
+    pub fn rand64() -> WasmiumHashID {
+        let mut buffer = [0u8; 64];
+        let mut rng = BufferedRng::new(ChaCha8::new());
+        rng.fill(&mut buffer);
+        let blake3hash = blake3::hash(&buffer);
+        WasmiumHashID {
+            tai_timestamp: Tai64N::now().to_bytes(),
+            blake3hash: *blake3hash.as_bytes(),
+        }
     }
 }
