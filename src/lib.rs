@@ -33,9 +33,9 @@
 //!
 //!
 
+use borsh::{BorshDeserialize, BorshSerialize};
 use nanorand::{BufferedRng, ChaCha8, Rng};
 use tai64::Tai64N;
-
 /// ### Structure
 /// ```rust
 /// #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
@@ -43,7 +43,7 @@ use tai64::Tai64N;
 ///     tai_timestamp: [u8; 12],
 ///     blake3hash: [u8; 32],
 /// }
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, BorshSerialize, BorshDeserialize)]
 pub struct WasmiumHashID {
     tai_timestamp: [u8; 12],
     blake3hash: [u8; 32],
