@@ -34,8 +34,11 @@
 //!
 
 use borsh::{BorshDeserialize, BorshSerialize};
-use nanorand::{BufferedRng, ChaCha8, Rng};
 use tai64::Tai64N;
+
+#[cfg(feature = "random_id")]
+use nanorand::{BufferedRng, ChaCha8, Rng};
+
 /// ### Structure
 /// ```rust
 /// #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
@@ -153,6 +156,7 @@ impl WasmiumHashID {
     /// // Generate the hash
     /// let hash_id = WasmiumHashID::rand32().build();
     /// ```
+    #[cfg(feature = "random_id")]
     pub fn rand32() -> WasmiumHashID {
         let mut buffer = [0u8; 32];
         let mut rng = BufferedRng::new(ChaCha8::new());
@@ -173,6 +177,7 @@ impl WasmiumHashID {
     /// // Generate the hash
     /// let hash_id = WasmiumHashID::rand64().build();
     /// ```
+    #[cfg(feature = "random_id")]
     pub fn rand64() -> WasmiumHashID {
         let mut buffer = [0u8; 64];
         let mut rng = BufferedRng::new(ChaCha8::new());
