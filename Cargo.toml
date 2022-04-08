@@ -1,6 +1,6 @@
 [package]
 name = "wasmium-hash-id"
-version = "0.1.0"
+version = "1.0.0"
 edition = "2021"
 authors = ["Wasmium Network Developers <hq@wasmium.network>"]
 license = "Apache-2.0"
